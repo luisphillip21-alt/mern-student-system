@@ -8,7 +8,7 @@ function App() {
   const [age, setAge] = useState('');
   const [editingId, setEditingId] = useState(null);
 
-  const API_URL = 'http://localhost:5000/students';
+  const API_URL = 'https://mern-student-system.vercel.app/students';
 
   const fetchStudents = async () => {
     try {
