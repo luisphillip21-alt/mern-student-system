@@ -45,7 +45,7 @@ function App() {
       fetchStudents();
     } catch (error) {
       console.error('Error saving student:', error);
-      alert('Failed to save student. Please check backend connection.');
+      alert('Failed to save student.');
     }
   };
 
@@ -75,48 +75,53 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
+    <div style={{ minHeight: '100vh', backgroundColor: '#f3f4f6', padding: '32px', fontFamily: 'sans-serif' }}>
+      <div style={{ maxWidth: '800px', margin: '0 auto' }}>
+        
+        <h1 style={{ fontSize: '32px', fontWeight: 'bold', textAlign: 'center', color: '#1f2937', marginBottom: '24px' }}>
           Student Management System
         </h1>
 
-        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
-          <h2 className="text-xl font-semibold mb-4 text-gray-700">
+        {/* Input Form Box */}
+        <div style={{ backgroundColor: '#ffffff', padding: '24px', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', marginBottom: '32px' }}>
+          <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '16px', color: '#374151' }}>
             {editingId ? 'Edit Student' : 'Add New Student'}
           </h2>
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-            />
-            <input
-              type="number"
-              name="age"
-              placeholder="Age"
-              value={formData.age}
-              onChange={handleChange}
-              required
-              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-            />
-            <input
-              type="text"
-              name="course"
-              placeholder="Course"
-              value={formData.course}
-              onChange={handleChange}
-              required
-              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
-            />
-            <div className="md:col-span-3 flex gap-3 mt-2">
+          <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '12px' }}>
+              <input
+                type="text"
+                name="name"
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                style={{ padding: '12px', borderRadius: '6px', border: '1px solid #d1d5db', fontSize: '15px' }}
+              />
+              <input
+                type="number"
+                name="age"
+                placeholder="Age"
+                value={formData.age}
+                onChange={handleChange}
+                required
+                style={{ padding: '12px', borderRadius: '6px', border: '1px solid #d1d5db', fontSize: '15px' }}
+              />
+              <input
+                type="text"
+                name="course"
+                placeholder="Course"
+                value={formData.course}
+                onChange={handleChange}
+                required
+                style={{ padding: '12px', borderRadius: '6px', border: '1px solid #d1d5db', fontSize: '15px' }}
+              />
+            </div>
+            
+            <div style={{ display: 'flex', gap: '12px' }}>
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 font-bold transition-all"
+                style={{ flex: 1, backgroundColor: '#2563eb', color: '#ffffff', padding: '12px', borderRadius: '6px', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px' }}
               >
                 {editingId ? 'Update Student' : 'Add Student'}
               </button>
@@ -124,7 +129,7 @@ function App() {
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="w-full bg-gray-500 text-white py-3 px-4 rounded-lg hover:bg-gray-600 font-bold transition-all"
+                  style={{ flex: 1, backgroundColor: '#6b7280', color: '#ffffff', padding: '12px', borderRadius: '6px', border: 'none', fontWeight: 'bold', cursor: 'pointer', fontSize: '16px' }}
                 >
                   Cancel
                 </button>
@@ -133,50 +138,81 @@ function App() {
           </form>
         </div>
 
-        <div className="bg-white rounded-lg shadow-md overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {students.map((student) => (
-                <tr key={student._id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{student.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{student.age}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{student.course}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                    <div className="flex items-center space-x-4">
-                      <button
-                        onClick={() => handleEdit(student)}
-                        className="px-5 py-2.5 text-sm font-bold text-white bg-indigo-600 rounded-lg shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDelete(student._id)}
-                        className="px-5 py-2.5 text-sm font-bold text-white bg-red-600 rounded-lg shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-              {students.length === 0 && (
-                <tr>
-                  <td colSpan="4" className="px-6 py-4 text-center text-sm text-gray-500">
-                    No students found.
-                  </td>
-                </tr>
-              )}
-            </tbody>
-          </table>
-        </div>
+        {/* Student List Cards / Boxes */}
+        <h2 style={{ fontSize: '22px', fontWeight: 'bold', color: '#1f2937', marginBottom: '16px' }}>
+          Student List ({students.length})
+        </h2>
+
+        {students.length === 0 ? (
+          <div style={{ backgroundColor: '#ffffff', padding: '24px', textAlign: 'center', borderRadius: '8px', color: '#6b7280' }}>
+            No students found. Add one above!
+          </div>
+        ) : (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            {students.map((student) => (
+              <div 
+                key={student._id} 
+                style={{
+                  backgroundColor: '#ffffff',
+                  padding: '20px',
+                  borderRadius: '10px',
+                  boxShadow: '0 2px 4px rgba(0,0,0,0.08)',
+                  borderLeft: '6px solid #2563eb',
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  flexWrap: 'wrap',
+                  gap: '16px'
+                }}
+              >
+                <div>
+                  <h3 style={{ fontSize: '18px', fontWeight: 'bold', color: '#111827', margin: '0 0 6px 0' }}>
+                    {student.name}
+                  </h3>
+                  <div style={{ display: 'flex', gap: '16px', color: '#4b5563', fontSize: '14px' }}>
+                    <span><strong>Age:</strong> {student.age}</span>
+                    <span><strong>Course:</strong> {student.course}</span>
+                  </div>
+                </div>
+
+                {/* Separated and Larger Action Buttons */}
+                <div style={{ display: 'flex', gap: '12px' }}>
+                  <button
+                    onClick={() => handleEdit(student)}
+                    style={{
+                      backgroundColor: '#4f46e5',
+                      color: '#ffffff',
+                      padding: '10px 20px',
+                      borderRadius: '6px',
+                      border: 'none',
+                      fontWeight: 'bold',
+                      cursor: 'pointer',
+                      fontSize: '14px'
+                    }}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    onClick={() => handleDelete(student._id)}
+                    style={{
+                      backgroundColor: '#dc2626',
+                      color: '#ffffff',
+                      padding: '10px 20px',
+                      borderRadius: '6px',
+                      border: 'none',
+                      fontWeight: 'bold',
+                      cursor: 'pointer',
+                      fontSize: '14px'
+                    }}
+                  >
+                    Delete
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
       </div>
     </div>
   );
