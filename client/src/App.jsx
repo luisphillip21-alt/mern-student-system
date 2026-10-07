@@ -6,11 +6,9 @@ const API_URL = 'https://mern-student-system.vercel.app/students';
 function App() {
   const [students, setStudents] = useState([]);
   const [formData, setFormData] = useState({
-    studentId: '',
     name: '',
-    email: '',
-    course: '',
-    yearLevel: ''
+    age: '',
+    course: ''
   });
   const [editingId, setEditingId] = useState(null);
 
@@ -43,21 +41,20 @@ function App() {
       } else {
         await axios.post(API_URL, formData);
       }
-      setFormData({ studentId: '', name: '', email: '', course: '', yearLevel: '' });
+      setFormData({ name: '', age: '', course: '' });
       fetchStudents();
     } catch (error) {
       console.error('Error saving student:', error);
+      alert('Failed to save student. Please check backend connection.');
     }
   };
 
   const handleEdit = (student) => {
     setEditingId(student._id);
     setFormData({
-      studentId: student.studentId,
-      name: student.name,
-      email: student.email,
-      course: student.course,
-      yearLevel: student.yearLevel
+      name: student.name || '',
+      age: student.age || '',
+      course: student.course || ''
     });
   };
 
@@ -74,12 +71,12 @@ function App() {
 
   const handleCancel = () => {
     setEditingId(null);
-    setFormData({ studentId: '', name: '', email: '', course: '', yearLevel: '' });
+    setFormData({ name: '', age: '', course: '' });
   };
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-center text-gray-800 mb-8">
           Student Management System
         </h1>
@@ -88,33 +85,24 @@ function App() {
           <h2 className="text-xl font-semibold mb-4 text-gray-700">
             {editingId ? 'Edit Student' : 'Add New Student'}
           </h2>
-          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <input
-              type="text"
-              name="studentId"
-              placeholder="Student ID"
-              value={formData.studentId}
-              onChange={handleChange}
-              required
-              className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+          <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <input
               type="text"
               name="name"
-              placeholder="Full Name"
+              placeholder="Name"
               value={formData.name}
               onChange={handleChange}
               required
-              className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
             />
             <input
-              type="email"
-              name="email"
-              placeholder="Email Address"
-              value={formData.email}
+              type="number"
+              name="age"
+              placeholder="Age"
+              value={formData.age}
               onChange={handleChange}
               required
-              className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
             />
             <input
               type="text"
@@ -123,21 +111,12 @@ function App() {
               value={formData.course}
               onChange={handleChange}
               required
-              className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-800"
             />
-            <input
-              type="number"
-              name="yearLevel"
-              placeholder="Year Level"
-              value={formData.yearLevel}
-              onChange={handleChange}
-              required
-              className="p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 md:col-span-2"
-            />
-            <div className="md:col-span-2 flex gap-3">
+            <div className="md:col-span-3 flex gap-3 mt-2">
               <button
                 type="submit"
-                className="w-full bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700 font-semibold"
+                className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg hover:bg-blue-700 font-bold transition-all"
               >
                 {editingId ? 'Update Student' : 'Add Student'}
               </button>
@@ -145,7 +124,7 @@ function App() {
                 <button
                   type="button"
                   onClick={handleCancel}
-                  className="w-full bg-gray-500 text-white py-2 px-4 rounded hover:bg-gray-600 font-semibold"
+                  className="w-full bg-gray-500 text-white py-3 px-4 rounded-lg hover:bg-gray-600 font-bold transition-all"
                 >
                   Cancel
                 </button>
@@ -158,33 +137,29 @@ function App() {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Student ID</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Age</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Course</th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Year</th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-200">
               {students.map((student) => (
                 <tr key={student._id}>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{student.studentId}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{student.name}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{student.email}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{student.age}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{student.course}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">{student.yearLevel}</td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                     <div className="flex items-center space-x-4">
                       <button
                         onClick={() => handleEdit(student)}
-                        className="px-5 py-2.5 text-sm font-bold text-white bg-indigo-600 rounded-lg shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all duration-200"
+                        className="px-5 py-2.5 text-sm font-bold text-white bg-indigo-600 rounded-lg shadow hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all"
                       >
                         Edit
                       </button>
                       <button
                         onClick={() => handleDelete(student._id)}
-                        className="px-5 py-2.5 text-sm font-bold text-white bg-red-600 rounded-lg shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all duration-200"
+                        className="px-5 py-2.5 text-sm font-bold text-white bg-red-600 rounded-lg shadow hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 transition-all"
                       >
                         Delete
                       </button>
@@ -194,7 +169,7 @@ function App() {
               ))}
               {students.length === 0 && (
                 <tr>
-                  <td colSpan="6" className="px-6 py-4 text-center text-sm text-gray-500">
+                  <td colSpan="4" className="px-6 py-4 text-center text-sm text-gray-500">
                     No students found.
                   </td>
                 </tr>
