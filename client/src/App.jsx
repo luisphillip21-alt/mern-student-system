@@ -45,7 +45,6 @@ function App() {
       fetchStudents();
     } catch (error) {
       console.error('Error saving student:', error);
-      alert('Failed to save student.');
     }
   };
 
@@ -59,13 +58,11 @@ function App() {
   };
 
   const handleDelete = async (id) => {
-    if (window.confirm('Are you sure you want to delete this student?')) {
-      try {
-        await axios.delete(`${API_URL}/${id}`);
-        fetchStudents();
-      } catch (error) {
-        console.error('Error deleting student:', error);
-      }
+    try {
+      await axios.delete(`${API_URL}/${id}`);
+      fetchStudents();
+    } catch (error) {
+      console.error('Error deleting student:', error);
     }
   };
 
@@ -82,7 +79,6 @@ function App() {
           Student Management System
         </h1>
 
-        
         <div style={{ backgroundColor: '#ffffff', padding: '24px', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', marginBottom: '32px' }}>
           <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '16px', color: '#374151' }}>
             {editingId ? 'Edit Student' : 'Add New Student'}
@@ -138,7 +134,6 @@ function App() {
           </form>
         </div>
 
-        
         <h2 style={{ fontSize: '22px', fontWeight: 'bold', color: '#1f2937', marginBottom: '16px' }}>
           Student List ({students.length})
         </h2>
@@ -175,7 +170,6 @@ function App() {
                   </div>
                 </div>
 
-                
                 <div style={{ display: 'flex', gap: '12px' }}>
                   <button
                     onClick={() => handleEdit(student)}
