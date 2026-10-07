@@ -10,7 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 1. READ: GET /students (Kumuha ng lahat ng estudyante)[cite: 4, 7]
+
 app.get('/students', async (req, res) => {
   try {
     const students = await Student.find();
@@ -20,7 +20,7 @@ app.get('/students', async (req, res) => {
   }
 });
 
-// 2. CREATE: POST /students (Magdagdag ng bagong estudyante)[cite: 3, 7]
+
 app.post('/students', async (req, res) => {
   try {
     const { name, course, age } = req.body;
@@ -32,7 +32,7 @@ app.post('/students', async (req, res) => {
   }
 });
 
-// 3. UPDATE: PUT /students/:id (Mag-update ng umiiral na estudyante)[cite: 6, 7]
+
 app.put('/students/:id', async (req, res) => {
   try {
     const { name, course, age } = req.body;
@@ -47,7 +47,7 @@ app.put('/students/:id', async (req, res) => {
   }
 });
 
-// 4. DELETE: DELETE /students/:id (Magbura ng estudyante)[cite: 5, 7]
+
 app.delete('/students/:id', async (req, res) => {
   try {
     await Student.findByIdAndDelete(req.params.id);
