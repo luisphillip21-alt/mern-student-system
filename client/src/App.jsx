@@ -82,7 +82,7 @@ function App() {
           Student Management System
         </h1>
 
-        {/* Input Form Box */}
+        
         <div style={{ backgroundColor: '#ffffff', padding: '24px', borderRadius: '12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', marginBottom: '32px' }}>
           <h2 style={{ fontSize: '20px', fontWeight: '600', marginBottom: '16px', color: '#374151' }}>
             {editingId ? 'Edit Student' : 'Add New Student'}
@@ -138,7 +138,7 @@ function App() {
           </form>
         </div>
 
-        {/* Student List Cards / Boxes */}
+        
         <h2 style={{ fontSize: '22px', fontWeight: 'bold', color: '#1f2937', marginBottom: '16px' }}>
           Student List ({students.length})
         </h2>
@@ -175,7 +175,7 @@ function App() {
                   </div>
                 </div>
 
-                {/* Separated and Larger Action Buttons */}
+                
                 <div style={{ display: 'flex', gap: '12px' }}>
                   <button
                     onClick={() => handleEdit(student)}
