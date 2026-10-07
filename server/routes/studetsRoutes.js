@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Student = require('../models/Student');
 
-// 1. GET - Kunin lahat ng estudyante
+
 router.get('/', async (req, res) => {
   try {
     const students = await Student.find();
@@ -12,7 +12,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// 2. POST - Magdagdag ng estudyante
+
 router.post('/', async (req, res) => {
   try {
     const student = new Student(req.body);
@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-// 3. PUT - Mag-update ng estudyante
+
 router.put('/:id', async (req, res) => {
   try {
     const { name, course, age } = req.body;
@@ -38,7 +38,7 @@ router.put('/:id', async (req, res) => {
   }
 });
 
-// 4. DELETE - Magbura ng estudyante
+
 router.delete('/:id', async (req, res) => {
   try {
     await Student.findByIdAndDelete(req.params.id);
